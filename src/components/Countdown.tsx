@@ -1,52 +1,22 @@
-import { useState, useEffect } from 'react';
-
-import { useChallenges } from '../context/ChallengesContext';
+import { useCountdown } from '../context/CountdownContext';
 
 import styles from '../styles/components/Countdown.module.css';
 
 
 function Countdown() {
-  const [time, setTime] = useState(0.1 * 60);
+  const {
+    time,
+    hasFinished,
+    isActive,
+    startCountdown,
+    resetCountdown,
+  } = useCountdown();
 
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
 
   const [minutesLeft, minutesRight] = minutes.toString().padStart(2, '0').split('');
   const [secondsLeft, secondsRight] = seconds.toString().padStart(2, '0').split('');
-
-
-  const { startNewChallenge } = useChallenges();
-
-  const [hasFinished, setHasFinished] = useState(false);
-  const [isActive, setIsActive] = useState(false);
-
-  useEffect(() => {
-    if (time === 0) {
-      setHasFinished(true);
-      setIsActive(false);
-      startNewChallenge();
-    }
-  }, [time]);
-  useEffect(() => {
-    if (isActive) {
-      const id = setInterval(() => {
-        setTime(t => t-1);
-      }, 1000);
-
-      return () => {
-        clearInterval(id);
-      };
-    }
-  }, [isActive]);
-
-
-  const startCountdown = () => {
-    setIsActive(true);
-  };
-  const resetCountdown = () => {
-    setIsActive(false);
-    setTime(25 * 60);
-  };
 
   return (
     <div>

@@ -27,7 +27,7 @@ interface CountdownProviderProps {
 function CountdownProvider({ children }: CountdownProviderProps) {
   const { startNewChallenge } = useChallenges();
 
-  const [time, setTime] = useState(0.05 * 60);
+  const [time, setTime] = useState(25 * 60);
   const [hasFinished, setHasFinished] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
@@ -55,7 +55,7 @@ function CountdownProvider({ children }: CountdownProviderProps) {
   };
   const resetCountdown = () => {
     setIsActive(false);
-    setTime(0.05 * 60);
+    setTime(25 * 60);
 
     // would be better to lift all state up
     setHasFinished(false);
